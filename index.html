@@ -1,3 +1,5 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Japan Talk FPTU</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +24,10 @@
   color-scheme:light;
 }
 *{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
 body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
 .wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15}
@@ -33,7 +39,7 @@ a{color:inherit}
 
 /* top bar */
 .top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:20px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.02em}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.02em;white-space:nowrap}
 .brand .dot{width:12px;height:12px;border-radius:50%;background:var(--red)}
 .chip{font-size:13px;padding:6px 12px;border:1px solid var(--line);border-radius:99px;background:var(--card);white-space:nowrap}
 
@@ -163,7 +169,7 @@ form{background:var(--card);border-radius:20px;border:1px solid var(--line);padd
 .full{grid-column:1/-1}
 .field{display:flex;flex-direction:column;gap:6px;min-width:0}
 label{font-size:14px;font-weight:600}
-label .opt{font-weight:400;color:var(--ink-2)}
+label .opt-l{font-weight:400;color:var(--ink-2)}
 label .req{color:var(--red)}
 input,select{font:inherit;font-size:16px;color:var(--ink);background:var(--paper);border:1.5px solid transparent;border-radius:12px;padding:13px 14px;width:100%;transition:border-color .15s,background .15s}
 input::placeholder{color:#9AA1AE}
@@ -176,6 +182,45 @@ input:focus,select:focus{outline:none;border-color:var(--ink);background:var(--c
 .consent input{width:18px;height:18px;margin-top:3px;flex:none;accent-color:var(--ink)}
 .form-foot{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
 .form-foot small{color:var(--ink-2);font-size:13px}
+
+/* stepper */
+.progress{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.progress div{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600;color:var(--ink-2)}
+.progress div::before{content:"";height:4px;border-radius:4px;background:var(--line);transition:background .3s}
+.progress div.on{color:var(--ink)}
+.progress div.on::before{background:var(--red)}
+.step{display:flex;flex-direction:column;gap:20px;border:0;margin:0;padding:0;min-width:0}
+.step legend{padding:0;margin-bottom:4px}
+.step legend h3{font-size:22px;font-weight:800;letter-spacing:-.01em}
+.step legend p{font-size:14px;color:var(--ink-2);margin-top:4px}
+.q{display:flex;flex-direction:column;gap:10px;min-width:0}
+.q > .ql{font-size:15px;font-weight:600}
+.q > .qh{font-size:13px;color:var(--ink-2);margin-top:-6px}
+.q.err > .ql{color:var(--red)}
+.q .qerr{font-size:13px;color:var(--red);min-height:1em}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts.col{flex-direction:column}
+.opt{position:relative;display:flex}
+.opt input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+.opt span{display:flex;align-items:center;gap:10px;cursor:pointer;border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:11px 14px;font-size:15px;line-height:1.35;transition:border-color .15s,background .15s;width:100%}
+.opt span:hover{border-color:var(--ink-2)}
+.opt input:checked + span{border-color:var(--ink);background:var(--paper);font-weight:600}
+.opt input:focus-visible + span{outline:3px solid var(--ink);outline-offset:2px}
+.opt input[type=checkbox] + span::before,.opt input[type=radio] + span::before{content:"";flex:none;width:18px;height:18px;border:2px solid var(--line);background:var(--card);transition:all .15s}
+.opt input[type=radio] + span::before{border-radius:50%}
+.opt input[type=checkbox] + span::before{border-radius:5px}
+.opt input:checked + span::before{border-color:var(--ink);background:var(--ink);box-shadow:inset 0 0 0 3px var(--card)}
+.opt.stage input:checked + span{border-color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--card))}
+.opt.stage input:checked + span::before{border-color:var(--c);background:var(--c)}
+.opt input:disabled + span{opacity:.45;cursor:not-allowed}
+.chips .opt span{border-radius:99px;padding:9px 14px}
+.chips .opt input + span::before{display:none}
+textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--paper);border:1.5px solid transparent;border-radius:12px;padding:13px 14px;width:100%;min-height:110px;resize:vertical}
+textarea:focus{outline:none;border-color:var(--ink);background:var(--card)}
+.counter{font-family:var(--f-mono);font-size:12px;color:var(--ink-2)}
+.confirm-box{background:var(--paper);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.nav{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.nav .right{display:flex;gap:10px;align-items:center;margin-left:auto}
 
 /* boarding pass result */
 .pass{background:var(--ink);color:#fff;border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
@@ -364,29 +409,101 @@ footer{padding-block:40px 56px;border-top:1px solid var(--line);margin-top:24px;
         <ul>
           <li>Thông tin dùng để check-in và liên hệ về sự kiện.</li>
           <li>Câu hỏi gửi trước cho chị An được ưu tiên trả lời.</li>
-          <li>Đăng ký xong, bạn nhận vé điện tử ngay trên trang.</li>
+          <li>4 bước ngắn, bấm Lấy vé là đăng ký xong, nhận vé điện tử ngay.</li>
         </ul>
         <div class="checkin"><span class="clock">12:30</span><p><b>Check-in từ 12:30</b> tại EP109. Đến sớm để nhận sticker và ngồi chỗ đẹp, chương trình bắt đầu đúng 12:50.</p></div>
       </aside>
 
       <div id="form-slot">
         <form id="reg" novalidate>
-          <div class="fields">
-            <div class="field full"><label for="f-name">Họ và tên <span class="req">*</span></label><input id="f-name" name="name" autocomplete="name" placeholder="Nguyễn Văn A" required><span class="hint"></span></div>
-            <div class="field"><label for="f-mssv">Mã số sinh viên <span class="req">*</span></label><input id="f-mssv" name="mssv" autocomplete="off" placeholder="HE180000" required style="text-transform:uppercase"><span class="hint"></span></div>
-            <div class="field"><label for="f-email">Email <span class="req">*</span></label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="ten@fpt.edu.vn" required><span class="hint">Ưu tiên email sinh viên FPT</span></div>
-            <div class="field"><label for="f-phone">Số điện thoại <span class="opt">(không bắt buộc)</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="09xx xxx xxx"><span class="hint">Chỉ dùng khi BTC cần liên hệ gấp</span></div>
-            <div class="field"><label for="f-major">Chuyên ngành <span class="req">*</span></label><input id="f-major" name="major" placeholder="Kỹ thuật phần mềm" required><span class="hint"></span></div>
-            <div class="field full"><label for="f-term">Kỳ học hiện tại <span class="req">*</span></label>
-              <select id="f-term" name="term" required>
-                <option value="">Chọn kỳ học</option>
-                <option>Kỳ 0 (Dự bị/Tiếng Anh)</option><option>Kỳ 1</option><option>Kỳ 2</option><option>Kỳ 3</option><option>Kỳ 4</option><option>Kỳ 5 (OJT)</option><option>Kỳ 6</option><option>Kỳ 7</option><option>Kỳ 8</option><option>Kỳ 9</option><option>Khác</option>
-              </select><span class="hint"></span></div>
-          </div>
-          <label class="consent" for="f-ok"><input id="f-ok" type="checkbox" required> Mình sẽ có mặt check-in tại EP109 từ 12:30, Thứ Ba 20/10.</label>
-          <div class="form-foot">
-            <small id="form-msg" aria-live="polite">Các mục có dấu * là bắt buộc.</small>
-            <button class="btn red" type="submit">Lấy vé <span aria-hidden="true">→</span></button>
+          <div class="progress" aria-hidden="true"><div class="on">Thông tin</div><div>Hành trình</div><div>Câu hỏi</div><div>Xác nhận</div></div>
+
+          <fieldset class="step" data-step="0">
+            <legend><h3>Phần 1 · Thông tin người tham dự</h3><p>Chỉ dùng cho việc check-in và liên hệ về sự kiện.</p></legend>
+            <div class="fields">
+              <div class="field full"><label for="f-name">Họ và tên <span class="req">*</span></label><input id="f-name" name="name" autocomplete="name" placeholder="Nguyễn Văn A" required><span class="hint"></span></div>
+              <div class="field"><label for="f-mssv">Mã số sinh viên <span class="req">*</span></label><input id="f-mssv" name="mssv" autocomplete="off" placeholder="HE180000" required style="text-transform:uppercase"><span class="hint"></span></div>
+              <div class="field"><label for="f-email">Email <span class="req">*</span></label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="ten@fpt.edu.vn" required><span class="hint">Ưu tiên email sinh viên FPT</span></div>
+              <div class="field"><label for="f-phone">Số điện thoại <span class="opt-l">(không bắt buộc)</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="09xx xxx xxx"><span class="hint">Chỉ dùng khi BTC cần liên hệ gấp</span></div>
+              <div class="field"><label for="f-major">Chuyên ngành <span class="req">*</span></label><input id="f-major" name="major" placeholder="Kỹ thuật phần mềm" required><span class="hint"></span></div>
+              <div class="field full"><label for="f-term">Kỳ học hiện tại <span class="req">*</span></label>
+                <select id="f-term" name="term" required>
+                  <option value="">Chọn kỳ học</option>
+                  <option>Kỳ 0 (Dự bị/Tiếng Anh)</option><option>Kỳ 1</option><option>Kỳ 2</option><option>Kỳ 3</option><option>Kỳ 4</option><option>Kỳ 5 (OJT)</option><option>Kỳ 6</option><option>Kỳ 7</option><option>Kỳ 8</option><option>Kỳ 9</option><option>Khác</option>
+                </select><span class="hint"></span></div>
+            </div>
+          </fieldset>
+
+          <fieldset class="step" data-step="1" hidden>
+            <legend><h3>Phần 2 · Hành trình của bạn</h3><p>Giúp BTC và diễn giả chuẩn bị nội dung sát với nhu cầu của bạn.</p></legend>
+            <div class="q" data-q="stage">
+              <span class="ql" id="q-stage">Bạn đang ở chặng nào trong hành trình tới Nhật? <span class="req">*</span></span>
+              <span class="qh">BTC sẽ phát sticker màu tương ứng khi check-in.</span>
+              <div class="opts col" role="radiogroup" aria-labelledby="q-stage">
+                <label class="opt stage" style="--c:var(--green)"><input type="radio" name="stage" id="st-xanh" value="🟢 Xanh – Đang nghĩ tới Nhật nhưng còn phân vân"><span>🟢 Xanh – Đang nghĩ tới Nhật nhưng còn phân vân</span></label>
+                <label class="opt stage" style="--c:var(--yellow)"><input type="radio" name="stage" id="st-vang" value="🟡 Vàng – Đã muốn đi và đang chuẩn bị"><span>🟡 Vàng – Đã muốn đi và đang chuẩn bị</span></label>
+                <label class="opt stage" style="--c:var(--red)"><input type="radio" name="stage" id="st-do" value="🔴 Đỏ – Đã có suất, đang chờ ngày bay"><span>🔴 Đỏ – Đã có suất, đang chờ ngày bay</span></label>
+              </div><span class="qerr"></span>
+            </div>
+            <div class="q" data-q="jp">
+              <span class="ql" id="q-jp">Trình độ tiếng Nhật hiện tại <span class="req">*</span></span>
+              <div class="opts chips" role="radiogroup" aria-labelledby="q-jp">
+                <label class="opt"><input type="radio" name="jp" id="jp-0" value="Chưa học"><span>Chưa học</span></label>
+                <label class="opt"><input type="radio" name="jp" id="jp-1" value="Đang học, chưa thi"><span>Đang học, chưa thi</span></label>
+                <label class="opt"><input type="radio" name="jp" id="jp-2" value="N5"><span>N5</span></label>
+                <label class="opt"><input type="radio" name="jp" id="jp-3" value="N4"><span>N4</span></label>
+                <label class="opt"><input type="radio" name="jp" id="jp-4" value="N3"><span>N3</span></label>
+                <label class="opt"><input type="radio" name="jp" id="jp-5" value="N2 trở lên"><span>N2 trở lên</span></label>
+              </div><span class="qerr"></span>
+            </div>
+            <div class="q" data-q="topics">
+              <span class="ql" id="q-topics">Bạn quan tâm nhất tới nội dung nào? <span class="req">*</span></span>
+              <span class="qh">Chọn tối đa 3 · <span class="counter" id="topic-count">0/3</span></span>
+              <div class="opts col" role="group" aria-labelledby="q-topics">
+                <label class="opt"><input type="checkbox" name="topics" id="tp-1" value="Có nên đi Nhật không – được gì, đánh đổi gì"><span>Có nên đi Nhật không – được gì, đánh đổi gì</span></label>
+                <label class="opt"><input type="checkbox" name="topics" id="tp-2" value="Học và sử dụng tiếng Nhật trong thực tế"><span>Học và sử dụng tiếng Nhật trong thực tế</span></label>
+                <label class="opt"><input type="checkbox" name="topics" id="tp-3" value="Chương trình học bổng / cơ hội sang Nhật ngoài OJT"><span>Chương trình học bổng / cơ hội sang Nhật ngoài OJT</span></label>
+                <label class="opt"><input type="checkbox" name="topics" id="tp-4" value="Chuẩn bị đồ đạc, giấy tờ trước khi đi"><span>Chuẩn bị đồ đạc, giấy tờ trước khi đi</span></label>
+                <label class="opt"><input type="checkbox" name="topics" id="tp-5" value="Cuộc sống hằng ngày: ăn ở, đi lại, chi tiêu"><span>Cuộc sống hằng ngày: ăn ở, đi lại, chi tiêu</span></label>
+                <label class="opt"><input type="checkbox" name="topics" id="tp-6" value="Văn hóa làm việc và giao tiếp với người Nhật"><span>Văn hóa làm việc và giao tiếp với người Nhật</span></label>
+                <label class="opt"><input type="checkbox" name="topics" id="tp-7" value="Xử lý tình huống bất ngờ, ốm đau, nhớ nhà"><span>Xử lý tình huống bất ngờ, ốm đau, nhớ nhà</span></label>
+                <label class="opt"><input type="checkbox" name="topics" id="tp-other" value="__other_option__"><span>Khác…</span></label>
+              </div>
+              <input id="tp-other-text" name="topicsOther" placeholder="Nội dung khác bạn quan tâm" hidden aria-label="Nội dung khác bạn quan tâm">
+              <span class="qerr"></span>
+            </div>
+          </fieldset>
+
+          <fieldset class="step" data-step="2" hidden>
+            <legend><h3>Phần 3 · Gửi câu hỏi trước cho diễn giả</h3><p>Câu hỏi hay sẽ được MC hỏi trực tiếp tại sự kiện. Cả hai câu đều không bắt buộc.</p></legend>
+            <div class="field"><label for="f-rumor">Một “lời đồn” về cuộc sống ở Nhật mà bạn muốn kiểm chứng</label><input id="f-rumor" name="rumor" placeholder="Ở Nhật trễ một phút cũng bị nhắc."><span class="hint">Có thể được chọn cho mini game “Thật hay đồn”.</span></div>
+            <div class="field"><label for="f-ask">Câu hỏi bạn muốn gửi tới chị An</label><textarea id="f-ask" name="ask" placeholder="Ví dụ: Tuần đầu ở Nhật, việc gì khiến chị bất ngờ nhất?"></textarea><span class="hint">Diễn giả chia sẻ từ trải nghiệm cá nhân. Câu hỏi về chi phí, visa, quy định từng đợt vui lòng tra cứu thông báo chính thức của trường.</span></div>
+          </fieldset>
+
+          <fieldset class="step" data-step="3" hidden>
+            <legend><h3>Phần 4 · Xác nhận</h3><p>Bước cuối, rồi chúng mình gặp nhau ở EP109 nhé.</p></legend>
+            <div class="q" data-q="photo">
+              <span class="ql" id="q-photo">Bạn có đồng ý xuất hiện trong ảnh/video sự kiện được BTC sử dụng cho mục đích truyền thông không? <span class="req">*</span></span>
+              <div class="opts col" role="radiogroup" aria-labelledby="q-photo">
+                <label class="opt"><input type="radio" name="photo" id="ph-yes" value="Đồng ý"><span>Đồng ý</span></label>
+                <label class="opt"><input type="radio" name="photo" id="ph-no" value="Không đồng ý (BTC sẽ hạn chế đăng ảnh có bạn)"><span>Không đồng ý (BTC sẽ hạn chế đăng ảnh có bạn)</span></label>
+              </div><span class="qerr"></span>
+            </div>
+            <div class="q" data-q="confirm">
+              <span class="ql">Xác nhận tham dự <span class="req">*</span></span>
+              <div class="confirm-box">
+                <label class="opt"><input type="checkbox" name="confirm" id="f-ok" value="Tôi xác nhận sẽ tham dự JAPAN TALK lúc 12:50, Thứ Ba 20/10/2026 tại phòng EP109, Tòa EP."><span>Tôi xác nhận sẽ tham dự JAPAN TALK lúc 12:50, Thứ Ba 20/10/2026 tại phòng EP109, Tòa EP.</span></label>
+                <span class="hint" style="color:var(--red);font-weight:600">Nhớ có mặt check-in từ 12:30 để nhận sticker và chọn chỗ ngồi.</span>
+              </div><span class="qerr"></span>
+            </div>
+          </fieldset>
+
+          <div class="nav">
+            <button class="btn ghost" type="button" id="back" hidden><span aria-hidden="true">←</span> Quay lại</button>
+            <div class="right">
+              <small id="form-msg" aria-live="polite" style="color:var(--ink-2);font-size:13px">Bước 1/4 · khoảng 3 phút</small>
+              <button class="btn red" type="submit" id="next">Tiếp tục <span aria-hidden="true">→</span></button>
+            </div>
           </div>
         </form>
       </div>
@@ -406,14 +523,17 @@ footer{padding-block:40px 56px;border-top:1px solid var(--line);margin-top:24px;
    Khi entries đủ và trang chạy trên hosting thường (Netlify, GitHub Pages), nút "Lấy vé" gửi thẳng vào Google Form. */
 const FORM = {
   id: "1FAIpQLScIV_ZdLNjWcbz9PHyatnNkCEtVNc7uhUXEjZPdxZ7xk-wCZg",
-  entries: { name:"1061518408", mssv:"770150626", email:"1756677125", phone:"1098321605", major:"40895307", term:"1043301557" },
+  entries: { name:"1061518408", mssv:"770150626", email:"1756677125", phone:"1098321605", major:"40895307", term:"1043301557",
+             stage:"766271768", jp:"170146596", topics:"1244212053", rumor:"1795833862", ask:"302923713", photo:"1542273627", confirm:"1725279657" },
   fixed: {},
   pages: 4,
-  direct: false   /* bật true khi đã gắn đủ các câu bắt buộc ở trang 2–4 */
+  direct: true
 };
 FORM.url = `https://docs.google.com/forms/d/e/${FORM.id}/viewform`;
 FORM.post = `https://docs.google.com/forms/d/e/${FORM.id}/formResponse`;
-const hasEntries = ["name","mssv","email","major","term"].every(k=>FORM.entries[k]);
+const hasEntries = true;
+/* Chỉ gửi thẳng được khi trang chạy trên hosting thường (GitHub Pages, Netlify). Trong khung xem trước của claude.ai, trang mở Google Form đã điền sẵn. */
+const canPost = /(github\.io|netlify\.app|vercel\.app|pages\.dev|localhost|127\.0\.0\.1)$/.test(location.hostname);
 
 /* Countdown to 20/10/2026 12:50 (UTC+7) */
 const T = new Date("2026-10-20T12:30:00+07:00").getTime();
@@ -459,6 +579,13 @@ document.querySelectorAll(".rumor").forEach(card=>{
 
 /* Form */
 const form = document.getElementById("reg");
+const steps = [...form.querySelectorAll(".step")];
+const bars = [...form.querySelectorAll(".progress div")];
+const msg = document.getElementById("form-msg");
+const nextBtn = document.getElementById("next");
+const backBtn = document.getElementById("back");
+let cur = 0;
+
 const rules = {
   name: v => v.trim().split(/\s+/).length >= 2 || "Nhập đầy đủ họ và tên.",
   mssv: v => /^[A-Za-z]{2}\d{6}$/.test(v.trim()) || "MSSV gồm 2 chữ và 6 số, ví dụ HE180000.",
@@ -472,21 +599,107 @@ function check(input){
   const rule = rules[input.name]; if(!rule) return true;
   const r = rule(input.value);
   const hint = f.querySelector(".hint");
-  if(!hint.dataset.base) hint.dataset.base = hint.textContent;
+  if(hint.dataset.base === undefined) hint.dataset.base = hint.textContent;
   if(r === true){ f.classList.remove("err"); hint.textContent = hint.dataset.base; input.removeAttribute("aria-invalid"); return true; }
   f.classList.add("err"); hint.textContent = r; input.setAttribute("aria-invalid","true"); return false;
 }
-form.querySelectorAll("input[name],select").forEach(el=>{
+form.querySelectorAll(".field input[name],.field select").forEach(el=>{
   el.addEventListener("blur",()=>{ if(el.value) check(el); });
   el.addEventListener("input",()=>{ if(el.closest(".field").classList.contains("err")) check(el); });
 });
+function qerr(name, text){
+  const q = form.querySelector(`.q[data-q="${name}"]`);
+  q.classList.toggle("err", !!text);
+  q.querySelector(".qerr").textContent = text || "";
+  return !text;
+}
+const picked = n => [...form.querySelectorAll(`input[name="${n}"]:checked`)];
+const qRules = {
+  stage: () => picked("stage").length ? "" : "Chọn chặng của bạn để BTC chuẩn bị sticker.",
+  jp: () => picked("jp").length ? "" : "Chọn trình độ tiếng Nhật hiện tại.",
+  topics: () => {
+    const p = picked("topics");
+    if(!p.length) return "Chọn ít nhất 1 nội dung bạn quan tâm.";
+    if(p.some(x=>x.id==="tp-other") && !document.getElementById("tp-other-text").value.trim()) return "Ghi rõ nội dung khác bạn quan tâm.";
+    return "";
+  },
+  photo: () => picked("photo").length ? "" : "Chọn một lựa chọn về ảnh/video.",
+  confirm: () => picked("confirm").length ? "" : "Tick xác nhận tham dự để lấy vé."
+};
+form.querySelectorAll(".q input").forEach(el=>el.addEventListener("change",()=>{
+  const q = el.closest(".q"); if(q.classList.contains("err")) qerr(q.dataset.q, qRules[q.dataset.q]());
+}));
+function validStep(i){
+  let ok = true, first = null;
+  steps[i].querySelectorAll(".field input[name],.field select").forEach(el=>{ if(!check(el)){ ok=false; first=first||el; } });
+  steps[i].querySelectorAll(".q[data-q]").forEach(q=>{ if(!qerr(q.dataset.q, qRules[q.dataset.q]())){ ok=false; first=first||q.querySelector("input"); } });
+  if(first) first.focus();
+  return ok;
+}
+function show(i){
+  cur = i;
+  steps.forEach((st,k)=>st.hidden = k!==i);
+  bars.forEach((b,k)=>b.classList.toggle("on", k<=i));
+  backBtn.hidden = i===0;
+  nextBtn.firstChild.textContent = i===steps.length-1 ? "Lấy vé " : "Tiếp tục ";
+  msg.textContent = `Bước ${i+1}/4`;
+  const top = form.getBoundingClientRect().top;
+  if(top < 0) form.scrollIntoView({behavior:"smooth",block:"start"});
+  const firstInput = steps[i].querySelector("input,select,textarea");
+  if(firstInput) firstInput.focus({preventScroll:true});
+}
+backBtn.addEventListener("click",()=>show(cur-1));
+
+/* Topics: max 3, "Khác" reveals a text box */
+const topicBoxes = [...form.querySelectorAll('input[name="topics"]')];
+function syncTopics(){
+  const n = picked("topics").length;
+  document.getElementById("topic-count").textContent = `${n}/3`;
+  topicBoxes.forEach(b=>{ b.disabled = !b.checked && n>=3; });
+  const other = document.getElementById("tp-other-text");
+  other.hidden = !document.getElementById("tp-other").checked;
+  if(!other.hidden) other.focus();
+}
+topicBoxes.forEach(b=>b.addEventListener("change",syncTopics));
+
+/* Station cards above sync with the stage question */
+const stageRadio = {xanh:"st-xanh", vang:"st-vang", do:"st-do"};
+document.querySelectorAll(".station").forEach(b=>b.addEventListener("click",()=>{
+  document.getElementById(stageRadio[b.dataset.stage]).checked = true;
+}));
+form.querySelectorAll('input[name="stage"]').forEach(r=>r.addEventListener("change",()=>{
+  const key = Object.keys(stageRadio).find(k=>stageRadio[k]===r.id);
+  stage = key;
+  document.querySelectorAll(".station").forEach(x=>x.setAttribute("aria-pressed", String(x.dataset.stage===key)));
+}));
+
+const $ = id => document.getElementById(id);
+function collect(){
+  const d = {
+    name: $("f-name").value.trim(), mssv: $("f-mssv").value.trim().toUpperCase(), email: $("f-email").value.trim(),
+    phone: $("f-phone").value.trim(), major: $("f-major").value.trim(), term: $("f-term").value,
+    stage: picked("stage")[0]?.value || "", jp: picked("jp")[0]?.value || "",
+    topics: picked("topics").map(x=>x.value), topicsOther: document.getElementById("tp-other-text").value.trim(),
+    rumor: $("f-rumor").value.trim(), ask: $("f-ask").value.trim(),
+    photo: picked("photo")[0]?.value || "", confirm: picked("confirm")[0]?.value || ""
+  };
+  return d;
+}
+function pairs(d){
+  const out = [];
+  for(const k in FORM.entries){
+    const id = "entry." + FORM.entries[k]; const v = d[k];
+    if(Array.isArray(v)) v.forEach(x=>out.push([id,x]));
+    else if(v) out.push([id,v]);
+  }
+  if(d.topics.includes("__other_option__")) out.push(["entry."+FORM.entries.topics+".other_option_response", d.topicsOther]);
+  return out;
+}
 function prefillUrl(d){
-  if(!hasEntries) return FORM.url;
   const p = new URLSearchParams({usp:"pp_url"});
-  for(const k in FORM.entries){ if(FORM.entries[k] && d[k]) p.append("entry."+FORM.entries[k], d[k]); }
+  pairs(d).forEach(([k,v])=>p.append(k,v));
   return FORM.url + "?" + p.toString();
 }
-/* Gửi thẳng vào Google Form qua form ẩn + iframe ẩn. Resolve true khi Google trả về, false nếu bị chặn hoặc quá 9 giây. */
 function postToGoogle(d){
   return new Promise(resolve=>{
     try{
@@ -494,42 +707,41 @@ function postToGoogle(d){
       const ifr = document.createElement("iframe");
       ifr.name = name; ifr.hidden = true; ifr.title = "gửi đăng ký";
       const f = document.createElement("form");
-      f.action = FORM.post; f.method = "POST"; f.target = name; f.hidden = true;
+      f.action = FORM.post; f.method = "POST"; f.target = name; f.hidden = true; f.acceptCharset = "UTF-8";
       const add = (k,v)=>{ const i=document.createElement("input"); i.type="hidden"; i.name=k; i.value=v; f.appendChild(i); };
-      for(const k in FORM.entries){ if(FORM.entries[k] && d[k]) add("entry."+FORM.entries[k], d[k]); }
-      for(const k in FORM.fixed) add(k, FORM.fixed[k]);
-      add("pageHistory", Array.from({length:FORM.pages},(_,i)=>i).join(","));
-      let done=false, armed=false;
-      const finish = ok=>{ if(done) return; done=true; setTimeout(()=>{ifr.remove(); f.remove();},1500); resolve(ok); };
-      ifr.addEventListener("load",()=>{ if(armed) finish(true); });
+      pairs(d).forEach(([k,v])=>add(k,v));
+      add("pageHistory", "0,1,2,3");
+      let done=false;
+      const finish = ok=>{ if(done) return; done=true; setTimeout(()=>{ifr.remove(); f.remove();},2000); resolve(ok); };
+      ifr.addEventListener("load",()=>finish(true));
       document.body.append(ifr, f);
-      armed = true; f.submit();
-      setTimeout(()=>finish(false), 9000);
+      f.submit();
+      setTimeout(()=>finish(false), 12000);
     }catch(err){ resolve(false); }
   });
 }
 const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const stageShort = v => v ? v.split(" – ")[0] : "";
 function renderPass(d, sent){
-  const url = prefillUrl(d);
   const next = sent
-    ? `<div class="steps"><span class="done">✓ Đã gửi BTC</span></div>
+    ? `<div class="steps"><span class="done">✓ Đã gửi tới BTC</span></div>
        <p><b style="color:var(--ink)">Nhớ check-in từ 12:30</b> tại EP109, Thứ Ba 20/10. Chụp màn hình vé này để BTC xác nhận nhanh hơn. Cảm ơn bạn đã nhận lời, chúng mình rất mong được gặp bạn!</p>`
-    : `<div class="steps"><span class="done">✓ Thông tin</span><span>Gửi Google Form</span></div>
-       <p>${hasEntries ? "Thông tin đã được điền sẵn. Mở Google Form và bấm Gửi để BTC ghi nhận chỗ của bạn." : "Bước cuối: mở Google Form chính thức của BTC, điền và bấm Gửi để BTC ghi nhận chỗ của bạn."} Nhớ check-in từ 12:30.</p>
-       <a class="btn red" href="${url}" target="_blank" rel="noopener">Hoàn tất trên Google Form <span aria-hidden="true">↗</span></a>`;
+    : `<div class="steps"><span class="done">✓ Đã điền đủ</span><span>Bấm Gửi trên Google Form</span></div>
+       <p>Toàn bộ câu trả lời đã được điền sẵn. Mở Google Form, bấm <b>Next</b> tới trang cuối rồi bấm <b>Submit/Gửi</b> để BTC ghi nhận. Nhớ check-in từ 12:30 nhé!</p>
+       <a class="btn red" href="${prefillUrl(d)}" target="_blank" rel="noopener">Mở Google Form để gửi <span aria-hidden="true">↗</span></a>`;
   document.getElementById("form-slot").innerHTML = `
     <div class="pass" tabindex="-1" id="pass">
       <div class="pass-top">
-        <span class="ok">${sent ? "Đăng ký thành công" : "Đã giữ chỗ · Bước 1/2"}</span>
-        <h3>${esc(d.name.trim())}</h3>
-        <span class="mono" style="opacity:.7">${esc(d.mssv)} · ${esc(d.major.trim())}</span>
+        <span class="ok">${sent ? "Đăng ký thành công" : "Gần xong · còn 1 bước"}</span>
+        <h3>${esc(d.name)}</h3>
+        <span style="opacity:.75"><span class="mono">${esc(d.mssv)}</span> · ${esc(d.major)}</span>
       </div>
       <dl class="pass-grid">
         <div><dt>Ngày</dt><dd class="mono">20.10.2026</dd></div>
-        <div><dt>Check-in</dt><dd class="mono">từ 12:30</dd></div>
+        <div><dt>Check-in</dt><dd>từ <span class="mono">12:30</span></dd></div>
         <div><dt>Phòng</dt><dd>EP109</dd></div>
         <div><dt>Kỳ</dt><dd>${esc(d.term)}</dd></div>
-        <div style="grid-column:span 2"><dt>Chặng</dt><dd>${stage ? stageName[stage] : "Chọn ở mục “Bạn đang đứng ở ga nào?”"}</dd></div>
+        <div style="grid-column:span 2"><dt>Sticker</dt><dd>${esc(stageShort(d.stage))}</dd></div>
       </dl>
       <div class="pass-next">${next}</div>
     </div>`;
@@ -537,19 +749,13 @@ function renderPass(d, sent){
 }
 form.addEventListener("submit", async e=>{
   e.preventDefault();
-  let ok = true, first = null;
-  form.querySelectorAll("input[name],select").forEach(el=>{ if(!check(el)){ ok=false; first = first || el; } });
-  const agree = document.getElementById("f-ok");
-  const msg = document.getElementById("form-msg");
-  if(!ok){ msg.textContent = "Còn vài mục cần sửa, xem các ô màu đỏ."; first.focus(); return; }
-  if(!agree.checked){ msg.textContent = "Tick xác nhận bạn sẽ có mặt check-in từ 12:30."; agree.focus(); return; }
-  const d = Object.fromEntries(new FormData(form));
-  d.mssv = d.mssv.trim().toUpperCase();
-  d.name = d.name.trim(); d.email = d.email.trim(); d.major = d.major.trim();
+  if(!validStep(cur)){ msg.textContent = "Còn vài mục cần sửa, xem chỗ màu đỏ."; return; }
+  if(cur < steps.length-1){ show(cur+1); return; }
+  const d = collect();
   let sent = false;
-  if(hasEntries && FORM.direct){
-    const btn = form.querySelector('button[type="submit"]');
-    btn.disabled = true; btn.firstChild.textContent = "Đang gửi ";
+  if(FORM.direct && canPost){
+    nextBtn.disabled = true; backBtn.disabled = true;
+    nextBtn.firstChild.textContent = "Đang gửi ";
     msg.textContent = "Đang gửi tới BTC…";
     sent = await postToGoogle(d);
   }
