@@ -1,0 +1,527 @@
+<title>Japan Talk FPTU</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;800&family=Noto+Serif+JP:wght@500;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one railway line runs down the page — ticket hero, three stations, timetable, then the boarding form. Single light "paper" world by choice. */
+:root{
+  --paper:#F5F6F3;      /* washi, cool */
+  --card:#FFFFFF;
+  --ink:#1B2338;        /* ai-iro indigo */
+  --ink-2:#5A6378;
+  --line:#D9DDE3;
+  --green:#2F8F5B;      /* sticker xanh */
+  --yellow:#E2A91F;     /* sticker vàng */
+  --red:#D23B33;        /* sticker đỏ */
+  --red-soft:#FBE9E7;
+  --f-body:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-jp:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r:14px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.15}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:6px}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--ink-2)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* top bar */
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:20px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.02em}
+.brand .dot{width:12px;height:12px;border-radius:50%;background:var(--red)}
+.chip{font-size:13px;padding:6px 12px;border:1px solid var(--line);border-radius:99px;background:var(--card);white-space:nowrap}
+
+/* hero ticket */
+.hero{padding-block:24px 56px}
+.ticket{display:grid;grid-template-columns:1fr 280px;background:var(--card);border-radius:22px;box-shadow:0 1px 0 var(--line),0 24px 60px -30px rgba(27,35,56,.35);position:relative;overflow:hidden}
+.t-main{padding:clamp(24px,5vw,48px);min-width:0;position:relative}
+.t-main .kanji{position:absolute;right:28px;top:28px;writing-mode:vertical-rl;font-family:var(--f-jp);font-weight:700;font-size:15px;letter-spacing:.35em;color:var(--ink-2)}
+.title{font-weight:800;font-size:clamp(44px,9vw,96px);letter-spacing:-.035em;line-height:.92;margin-top:14px}
+.title em{font-style:normal;color:var(--red)}
+.lede{margin-top:18px;max-width:46ch;color:var(--ink-2);font-size:17px}
+.route{margin-top:36px;display:grid;grid-template-columns:repeat(3,1fr);position:relative}
+.route::before{content:"";position:absolute;left:8px;right:8px;top:8px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--green) 0 33%,var(--yellow) 33% 66%,var(--red) 66%)}
+.stop{position:relative;padding-top:28px;font-size:14px;line-height:1.35}
+.stop::before{content:"";position:absolute;top:0;left:0;width:20px;height:20px;border-radius:50%;background:var(--card);border:4px solid var(--c)}
+.stop b{display:block;font-size:15px}
+.stop span{color:var(--ink-2);font-size:13px}
+.cta-row{margin-top:36px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{appearance:none;border:0;cursor:pointer;font:inherit;font-weight:600;border-radius:99px;padding:14px 26px;background:var(--ink);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:transform .15s ease,background .15s}
+.btn:hover{background:#000;transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--card)}
+.btn.red{background:var(--red)}
+.btn.red:hover{background:#B52E27}
+.seats{font-size:13px;color:var(--ink-2)}
+
+.t-stub{padding-bottom:120px!important;border-left:2px dashed var(--line);padding:clamp(24px,4vw,36px) 28px;display:flex;flex-direction:column;gap:18px;background:var(--paper);position:relative}
+.ticket::before,.ticket::after{content:"";position:absolute;right:269px;width:24px;height:24px;border-radius:50%;background:var(--paper)}
+.ticket::before{top:-12px}.ticket::after{bottom:-12px}
+.kv dt{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.kv dd{margin:2px 0 0;font-weight:600;font-size:16px;line-height:1.35}
+.kv dd.big{font-size:34px;font-weight:800;letter-spacing:-.02em;font-family:var(--f-body)}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:4px}
+.countdown div{background:var(--card);border-radius:10px;padding:8px 4px;text-align:center}
+.countdown b{display:block;font-family:var(--f-mono);font-size:20px;font-variant-numeric:tabular-nums}
+.countdown span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+
+/* seigaiha wave band behind hero */
+.hero{position:relative}
+.hero::before{content:"";position:absolute;inset:40px calc(-1*max(16px,env(safe-area-inset-left,0px))) -10px;z-index:-1;opacity:.55;
+  background:radial-gradient(circle at 50% 100%,transparent 9px,var(--line) 9px 10px,transparent 10px 15px,var(--line) 15px 16px,transparent 16px 21px,var(--line) 21px 22px,transparent 22px) 0 0/44px 22px,
+  radial-gradient(circle at 50% 100%,transparent 9px,var(--line) 9px 10px,transparent 10px 15px,var(--line) 15px 16px,transparent 16px 21px,var(--line) 21px 22px,transparent 22px) 22px 11px/44px 22px;
+  -webkit-mask:linear-gradient(180deg,#000,transparent 85%);mask:linear-gradient(180deg,#000,transparent 85%)}
+.hanko{position:absolute;right:22px;bottom:22px;width:78px;height:78px;border:2.5px solid var(--red);border-radius:50%;color:var(--red);display:grid;place-items:center;text-align:center;transform:rotate(-12deg);font-weight:800;line-height:1.05;opacity:.88}
+.hanko small{display:block;font-family:var(--f-jp);font-size:11px;font-weight:700;letter-spacing:.2em}
+.hanko b{font-family:var(--f-mono);font-size:17px}
+.checkin{display:flex;gap:14px;align-items:center;background:var(--ink);color:#fff;border-radius:var(--r);padding:16px 20px;margin-top:20px}
+.checkin .clock{flex:none;font-family:var(--f-mono);font-size:22px;font-weight:500;background:var(--red);border-radius:10px;padding:6px 10px}
+.checkin p{font-size:15px;line-height:1.45}
+.checkin p b{font-weight:700}
+.btn[disabled]{opacity:.6;cursor:progress;transform:none}
+.station .sticker{transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.station[aria-pressed="true"] .sticker{transform:scale(1.12) rotate(-8deg)}
+@media (prefers-reduced-motion:no-preference){
+  .hanko{animation:stamp .5s cubic-bezier(.3,1.5,.5,1) 1s both}
+  @keyframes stamp{from{transform:rotate(-12deg) scale(1.6);opacity:0}}
+}
+
+/* sections */
+section{padding-block:56px}
+.sec-head{display:flex;flex-direction:column;gap:10px;margin-bottom:32px;max-width:640px}
+.sec-head h2{font-size:clamp(28px,4.4vw,42px);font-weight:800;letter-spacing:-.025em}
+.sec-head p{color:var(--ink-2)}
+
+/* stations */
+.stations{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.station{appearance:none;font:inherit;color:inherit;text-align:left;cursor:pointer;background:var(--card);border:1.5px solid var(--line);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:14px;transition:border-color .15s,transform .15s,box-shadow .15s;min-width:0}
+.station:hover{transform:translateY(-2px);box-shadow:0 12px 30px -18px rgba(27,35,56,.35)}
+.station[aria-pressed="true"]{border-color:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 22%,transparent)}
+.sticker{width:44px;height:44px;border-radius:50%;background:var(--c);display:grid;place-items:center;color:#fff;font-family:var(--f-jp);font-weight:700;font-size:18px}
+.station h3{font-size:20px}
+.station p{color:var(--ink-2);font-size:15px}
+.station .get{font-size:14px;border-top:1px solid var(--line);padding-top:12px;margin-top:auto}
+.station .get b{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);margin-bottom:2px}
+.pick-note{margin-top:16px;font-size:14px;color:var(--ink-2);min-height:1.6em}
+
+/* timetable */
+.timetable{background:var(--card);border-radius:var(--r);border:1px solid var(--line);overflow:hidden}
+.row{display:grid;grid-template-columns:84px 18px 1fr auto;align-items:center;gap:16px;padding:16px 24px;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row .time{font-family:var(--f-mono);font-size:15px;font-variant-numeric:tabular-nums}
+.row .pin{width:14px;height:14px;border-radius:50%;background:var(--c,var(--ink))}
+.row .what b{display:block;font-weight:600}
+.row .what span{font-size:14px;color:var(--ink-2)}
+.row .dur{font-family:var(--f-mono);font-size:13px;color:var(--ink-2);white-space:nowrap}
+.row.hl{background:var(--red-soft)}
+
+/* rumor game */
+.rumors{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.rumor{background:var(--ink);color:#fff;border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.rumor q{font-size:19px;font-weight:600;line-height:1.4;quotes:"“" "”"}
+.rumor .n{font-family:var(--f-mono);font-size:12px;opacity:.6}
+.vote{display:flex;gap:8px;margin-top:auto}
+.vote button{flex:1;appearance:none;font:inherit;font-weight:600;font-size:14px;border-radius:99px;padding:10px;cursor:pointer;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35)}
+.vote button[aria-pressed="true"]{background:#fff;color:var(--ink);border-color:#fff}
+.rumor .after{font-size:13px;opacity:.75;min-height:1.4em}
+
+/* people */
+.people{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.person{display:flex;gap:18px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.mono-av{flex:none;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:24px;color:#fff;background:var(--c)}
+.person h3{font-size:20px}
+.person .role{font-size:13px;color:var(--ink-2);letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin:2px 0 8px}
+.person p{color:var(--ink-2);font-size:15px}
+
+/* form */
+.board{display:grid;grid-template-columns:1fr 1.25fr;gap:32px;align-items:start}
+.board aside{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);display:flex;flex-direction:column;gap:16px}
+.board aside ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.board aside li{display:flex;gap:10px;font-size:15px;color:var(--ink-2)}
+.board aside li::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--red);margin-top:9px}
+form{background:var(--card);border-radius:20px;border:1px solid var(--line);padding:clamp(20px,4vw,36px);display:flex;flex-direction:column;gap:20px;min-width:0}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.full{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+label{font-size:14px;font-weight:600}
+label .opt{font-weight:400;color:var(--ink-2)}
+label .req{color:var(--red)}
+input,select{font:inherit;font-size:16px;color:var(--ink);background:var(--paper);border:1.5px solid transparent;border-radius:12px;padding:13px 14px;width:100%;transition:border-color .15s,background .15s}
+input::placeholder{color:#9AA1AE}
+input:hover,select:hover{border-color:var(--line)}
+input:focus,select:focus{outline:none;border-color:var(--ink);background:var(--card)}
+.field.err input,.field.err select{border-color:var(--red);background:var(--red-soft)}
+.hint{font-size:13px;color:var(--ink-2);min-height:1.2em}
+.field.err .hint{color:var(--red)}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--ink-2)}
+.consent input{width:18px;height:18px;margin-top:3px;flex:none;accent-color:var(--ink)}
+.form-foot{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.form-foot small{color:var(--ink-2);font-size:13px}
+
+/* boarding pass result */
+.pass{background:var(--ink);color:#fff;border-radius:20px;overflow:hidden;display:flex;flex-direction:column}
+.pass-top{padding:28px;display:flex;flex-direction:column;gap:6px;border-bottom:2px dashed rgba(255,255,255,.25)}
+.pass-top .ok{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9FD8B7;font-weight:600}
+.pass-top h3{font-size:28px;font-weight:800}
+.pass-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:24px 28px}
+.pass-grid dt{font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.6}
+.pass-grid dd{margin:2px 0 0;font-weight:600;overflow-wrap:anywhere}
+.pass-next{background:#fff;color:var(--ink);padding:24px 28px;display:flex;flex-direction:column;gap:14px}
+.pass-next p{font-size:15px;color:var(--ink-2)}
+.pass-next .steps{display:flex;gap:8px;font-size:13px;font-weight:600}
+.pass-next .steps span{padding:4px 10px;border-radius:99px;background:var(--paper)}
+.pass-next .steps span.done{background:#E3F2E9;color:var(--green)}
+
+footer{padding-block:40px 56px;border-top:1px solid var(--line);margin-top:24px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;font-size:14px;color:var(--ink-2)}
+
+@media (max-width:860px){
+  .ticket{grid-template-columns:1fr}
+  .t-stub{border-left:0;border-top:2px dashed var(--line)}
+  .ticket::before,.ticket::after{right:auto;top:auto;bottom:auto}
+  .ticket::before,.ticket::after{display:none}
+  .stations,.rumors{grid-template-columns:1fr}
+  .people{grid-template-columns:1fr}
+  .board{grid-template-columns:1fr}
+  .board aside{position:static}
+}
+@media (max-width:520px){
+  .t-main .kanji{display:none}
+  .route{grid-template-columns:1fr;gap:14px}
+  .route::before{left:8px;right:auto;top:8px;bottom:8px;width:4px;height:auto;background:linear-gradient(180deg,var(--green) 0 33%,var(--yellow) 33% 66%,var(--red) 66%)}
+  .stop{padding:0 0 0 34px}
+  .fields{grid-template-columns:1fr}
+  .row{grid-template-columns:56px 12px 1fr;padding:14px 16px;gap:12px}
+  .row .dur{grid-column:3}
+  .pass-grid{grid-template-columns:1fr 1fr}
+}
+@media (prefers-reduced-motion:no-preference){
+  .route::before{transform-origin:left;animation:draw 1.2s cubic-bezier(.6,0,.2,1) .2s both}
+  @keyframes draw{from{transform:scaleX(.02)}}
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span class="dot" aria-hidden="true"></span>JAPAN TALK</div>
+    <span class="chip mono">FPTU Hòa Lạc · 20.10.2026</span>
+  </header>
+
+  <!-- HERO: the ticket -->
+  <div class="hero">
+    <article class="ticket" aria-labelledby="t-title">
+      <div class="t-main">
+        <div class="kanji" lang="ja" aria-hidden="true">日本への旅</div>
+        <p class="eyebrow">Thư mời · Buổi chia sẻ</p>
+        <h1 class="title" id="t-title">Hành trình<br>tới <em>Nhật</em></h1>
+        <p class="lede">Một buổi chiều nghe chị An kể thật về một tháng sống và thực tập ở Nhật theo học bổng: từ lúc còn phân vân, lúc chuẩn bị, đến tuần đầu đặt chân tới nơi.</p>
+        <div class="route" aria-label="Ba chặng của buổi chia sẻ">
+          <div class="stop" style="--c:var(--green)"><b>Cân nhắc</b><span>Có nên đi không?</span></div>
+          <div class="stop" style="--c:var(--yellow)"><b>Chuẩn bị</b><span>Tiếng Nhật, học bổng</span></div>
+          <div class="stop" style="--c:var(--red)"><b>Tới Nhật</b><span>Tuần đầu tiên</span></div>
+        </div>
+        <div class="cta-row">
+          <a class="btn red" href="#dang-ky">Giữ chỗ của bạn <span aria-hidden="true">→</span></a>
+          <span class="seats">Miễn phí · Check-in từ 12:30</span>
+        </div>
+      </div>
+      <aside class="t-stub" aria-label="Thông tin vé">
+        <dl class="kv"><dt>Ngày</dt><dd class="big mono">20.10</dd><dd>Thứ Ba, 2026</dd></dl>
+        <dl class="kv"><dt>Check-in</dt><dd class="mono" style="color:var(--red)">từ 12:30</dd></dl>
+        <dl class="kv"><dt>Bắt đầu</dt><dd class="mono">12:50 · Slot 3 (đến 15:10)</dd></dl>
+        <dl class="kv"><dt>Địa điểm</dt><dd>Phòng EP109, Tòa EP<br>ĐH FPT Hòa Lạc</dd></dl>
+        <div>
+          <p class="eyebrow">Mở check-in sau</p>
+          <div class="countdown" id="cd" aria-live="off">
+            <div><b id="cd-d">--</b><span>ngày</span></div>
+            <div><b id="cd-h">--</b><span>giờ</span></div>
+            <div><b id="cd-m">--</b><span>phút</span></div>
+            <div><b id="cd-s">--</b><span>giây</span></div>
+          </div>
+        </div>
+        <div class="hanko" aria-label="Check-in 12:30"><span><small lang="ja">受付</small><b>12:30</b></span></div>
+      </aside>
+    </article>
+  </div>
+
+  <!-- STATIONS -->
+  <section id="ga" aria-labelledby="ga-h">
+    <div class="sec-head">
+      <p class="eyebrow">Ba sticker, ba chặng</p>
+      <h2 id="ga-h">Bạn đang đứng ở ga nào?</h2>
+      <p>Tại hội trường, mỗi bạn nhận một sticker theo chặng của mình. Chặng nào cũng có phần dành riêng cho bạn.</p>
+    </div>
+    <div class="stations" role="group" aria-label="Chọn chặng của bạn">
+      <button class="station" type="button" data-stage="xanh" style="--c:var(--green)" aria-pressed="false">
+        <span class="sticker" lang="ja" aria-hidden="true">考</span>
+        <h3>Xanh · Đang phân vân</h3>
+        <p>Nghĩ tới Nhật nhưng chưa chắc có nên đi, sợ xa nhà, sợ tiếng chưa đủ.</p>
+        <p class="get"><b>Bạn mang về</b>Một câu nên tự hỏi trước khi quyết định.</p>
+      </button>
+      <button class="station" type="button" data-stage="vang" style="--c:var(--yellow)" aria-pressed="false">
+        <span class="sticker" lang="ja" aria-hidden="true">備</span>
+        <h3>Vàng · Đang chuẩn bị</h3>
+        <p>Đã muốn đi, đang tìm đường: tiếng Nhật, học bổng, những cánh cửa ngoài OJT.</p>
+        <p class="get"><b>Bạn mang về</b>Một việc bắt đầu được ngay từ tuần tới.</p>
+      </button>
+      <button class="station" type="button" data-stage="do" style="--c:var(--red)" aria-pressed="false">
+        <span class="sticker" lang="ja" aria-hidden="true">発</span>
+        <h3>Đỏ · Sắp lên đường</h3>
+        <p>Đã có suất, đang chờ ngày bay và muốn biết tuần đầu ở Nhật thật sự ra sao.</p>
+        <p class="get"><b>Bạn mang về</b>Cách giữ bình tĩnh và biết tìm người giúp.</p>
+      </button>
+    </div>
+    <p class="pick-note" id="pick-note" aria-live="polite">Chạm vào chặng của bạn.</p>
+  </section>
+
+  <!-- TIMETABLE -->
+  <section id="lich" aria-labelledby="lich-h">
+    <div class="sec-head">
+      <p class="eyebrow">Bảng giờ tàu</p>
+      <h2 id="lich-h">Lịch trình 20/10</h2>
+    </div>
+    <div class="timetable">
+      <div class="row hl" style="--c:var(--red)"><span class="time">12:30</span><span class="pin" aria-hidden="true"></span><span class="what"><b>Check-in</b><span>Đến sớm nhận sticker theo chặng của bạn và chọn chỗ ngồi</span></span><span class="dur">20 phút</span></div>
+      <div class="row"><span class="time">12:50</span><span class="pin" aria-hidden="true"></span><span class="what"><b>Mở màn</b><span>Một câu chuyện kể dở ở Nhật, cả phòng giữ lại tới cuối</span></span><span class="dur">7 phút</span></div>
+      <div class="row" style="--c:var(--green)"><span class="time">12:57</span><span class="pin" aria-hidden="true"></span><span class="what"><b>Lúc cân nhắc</b><span>Điều khiến chị An muốn đi, và điều khiến chị chần chừ</span></span><span class="dur">15 phút</span></div>
+      <div class="row" style="--c:var(--yellow)"><span class="time">13:12</span><span class="pin" aria-hidden="true"></span><span class="what"><b>Lúc chuẩn bị</b><span>Tiếng Nhật ngoài đời thật và chương trình học bổng</span></span><span class="dur">20 phút</span></div>
+      <div class="row"><span class="time">13:32</span><span class="pin" aria-hidden="true"></span><span class="what"><b>Thật hay đồn</b><span>Mini game sáu tin đồn về cuộc sống ở Nhật</span></span><span class="dur">15 phút</span></div>
+      <div class="row" style="--c:var(--red)"><span class="time">13:47</span><span class="pin" aria-hidden="true"></span><span class="what"><b>Lúc tới Nhật</b><span>Tuần đầu tiên, và cái kết của câu chuyện mở màn</span></span><span class="dur">25 phút</span></div>
+      <div class="row"><span class="time">14:12</span><span class="pin" aria-hidden="true"></span><span class="what"><b>Hỏi đáp</b><span>Câu hỏi gửi trước được ưu tiên, sau đó hỏi trực tiếp</span></span><span class="dur">15 phút</span></div>
+      <div class="row"><span class="time">14:27</span><span class="pin" aria-hidden="true"></span><span class="what"><b>Chốt</b><span>Lời nhắn riêng cho từng màu sticker</span></span><span class="dur">8 phút</span></div>
+    </div>
+  </section>
+
+  <!-- RUMORS -->
+  <section id="don" aria-labelledby="don-h">
+    <div class="sec-head">
+      <p class="eyebrow">Khởi động trước</p>
+      <h2 id="don-h">Thật hay đồn?</h2>
+      <p>Đoán trước ở đây. Ngày 20/10, chị An sẽ chốt đáp án từ chính một tháng ở Nhật.</p>
+    </div>
+    <div class="rumors">
+      <article class="rumor"><span class="n mono">Tin đồn 01</span><q>Người Nhật lạnh lùng, khó làm thân.</q><div class="vote"><button type="button" aria-pressed="false">Thật</button><button type="button" aria-pressed="false">Đồn</button></div><p class="after" aria-live="polite"></p></article>
+      <article class="rumor"><span class="n mono">Tin đồn 03</span><q>Ở Nhật trễ một phút cũng bị nhắc.</q><div class="vote"><button type="button" aria-pressed="false">Thật</button><button type="button" aria-pressed="false">Đồn</button></div><p class="after" aria-live="polite"></p></article>
+      <article class="rumor"><span class="n mono">Tin đồn 06</span><q>Ở Nhật vài tháng là không muốn về nữa.</q><div class="vote"><button type="button" aria-pressed="false">Thật</button><button type="button" aria-pressed="false">Đồn</button></div><p class="after" aria-live="polite"></p></article>
+    </div>
+  </section>
+
+  <!-- PEOPLE -->
+  <section id="khach" aria-labelledby="khach-h">
+    <div class="sec-head">
+      <p class="eyebrow">Người dẫn đường</p>
+      <h2 id="khach-h">Ai ngồi trên sân khấu</h2>
+    </div>
+    <div class="people">
+      <div class="person"><span class="mono-av" style="--c:var(--red)" aria-hidden="true">A</span><div><h3>Chị An</h3><p class="role">Diễn giả</p><p>Từng đứng trước đúng câu hỏi "có nên đi Nhật không", rồi có một tháng sống và thực tập ở Nhật theo chương trình học bổng.</p></div></div>
+      <div class="person"><span class="mono-av" style="--c:var(--ink)" aria-hidden="true">P</span><div><h3>Chị Phượng</h3><p class="role">MC</p><p>Người hỏi thay bạn: mang những câu hỏi các bạn gửi trước lên sân khấu và giữ nhịp cho cả buổi.</p></div></div>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section id="dang-ky" aria-labelledby="dk-h">
+    <div class="board">
+      <aside>
+        <p class="eyebrow">Giữ chỗ</p>
+        <h2 id="dk-h" style="font-size:clamp(28px,4.4vw,42px);font-weight:800;letter-spacing:-.025em">Lấy vé lên tàu</h2>
+        <p style="color:var(--ink-2)">Dành cho sinh viên FPTU quan tâm tới học tập, thực tập hoặc làm việc tại Nhật, dù bạn mới tìm hiểu hay đã có suất.</p>
+        <ul>
+          <li>Thông tin dùng để check-in và liên hệ về sự kiện.</li>
+          <li>Câu hỏi gửi trước cho chị An được ưu tiên trả lời.</li>
+          <li>Đăng ký xong, bạn nhận vé điện tử ngay trên trang.</li>
+        </ul>
+        <div class="checkin"><span class="clock">12:30</span><p><b>Check-in từ 12:30</b> tại EP109. Đến sớm để nhận sticker và ngồi chỗ đẹp, chương trình bắt đầu đúng 12:50.</p></div>
+      </aside>
+
+      <div id="form-slot">
+        <form id="reg" novalidate>
+          <div class="fields">
+            <div class="field full"><label for="f-name">Họ và tên <span class="req">*</span></label><input id="f-name" name="name" autocomplete="name" placeholder="Nguyễn Văn A" required><span class="hint"></span></div>
+            <div class="field"><label for="f-mssv">Mã số sinh viên <span class="req">*</span></label><input id="f-mssv" name="mssv" autocomplete="off" placeholder="HE180000" required style="text-transform:uppercase"><span class="hint"></span></div>
+            <div class="field"><label for="f-email">Email <span class="req">*</span></label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="ten@fpt.edu.vn" required><span class="hint">Ưu tiên email sinh viên FPT</span></div>
+            <div class="field"><label for="f-phone">Số điện thoại <span class="opt">(không bắt buộc)</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="09xx xxx xxx"><span class="hint">Chỉ dùng khi BTC cần liên hệ gấp</span></div>
+            <div class="field"><label for="f-major">Chuyên ngành <span class="req">*</span></label><input id="f-major" name="major" placeholder="Kỹ thuật phần mềm" required><span class="hint"></span></div>
+            <div class="field full"><label for="f-term">Kỳ học hiện tại <span class="req">*</span></label>
+              <select id="f-term" name="term" required>
+                <option value="">Chọn kỳ học</option>
+                <option>Kỳ 0 (Dự bị/Tiếng Anh)</option><option>Kỳ 1</option><option>Kỳ 2</option><option>Kỳ 3</option><option>Kỳ 4</option><option>Kỳ 5 (OJT)</option><option>Kỳ 6</option><option>Kỳ 7</option><option>Kỳ 8</option><option>Kỳ 9</option><option>Khác</option>
+              </select><span class="hint"></span></div>
+          </div>
+          <label class="consent" for="f-ok"><input id="f-ok" type="checkbox" required> Mình sẽ có mặt check-in tại EP109 từ 12:30, Thứ Ba 20/10.</label>
+          <div class="form-foot">
+            <small id="form-msg" aria-live="polite">Các mục có dấu * là bắt buộc.</small>
+            <button class="btn red" type="submit">Lấy vé <span aria-hidden="true">→</span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Japan Talk · Cân nhắc, Chuẩn bị, Tới Nhật</span>
+    <span>Chi phí, visa, quy định từng đợt: xem thông báo chính thức của trường.</span>
+  </footer>
+</div>
+
+<script>
+/* ===== CẤU HÌNH GOOGLE FORM =====
+   entries: mã entry.XXXX của từng câu (lấy từ "Lấy đường liên kết điền sẵn").
+   fixed:   câu trả lời cố định cho các câu bắt buộc ở trang 2–4 (nếu có), dạng {"entry.123":"..."}.
+   Khi entries đủ và trang chạy trên hosting thường (Netlify, GitHub Pages), nút "Lấy vé" gửi thẳng vào Google Form. */
+const FORM = {
+  id: "1FAIpQLScIV_ZdLNjWcbz9PHyatnNkCEtVNc7uhUXEjZPdxZ7xk-wCZg",
+  entries: { name:"1061518408", mssv:"770150626", email:"1756677125", phone:"1098321605", major:"40895307", term:"1043301557" },
+  fixed: {},
+  pages: 4,
+  direct: false   /* bật true khi đã gắn đủ các câu bắt buộc ở trang 2–4 */
+};
+FORM.url = `https://docs.google.com/forms/d/e/${FORM.id}/viewform`;
+FORM.post = `https://docs.google.com/forms/d/e/${FORM.id}/formResponse`;
+const hasEntries = ["name","mssv","email","major","term"].every(k=>FORM.entries[k]);
+
+/* Countdown to 20/10/2026 12:50 (UTC+7) */
+const T = new Date("2026-10-20T12:30:00+07:00").getTime();
+const pad = n => String(n).padStart(2,"0");
+function tick(){
+  let s = Math.max(0, Math.floor((T - Date.now())/1000));
+  const d = Math.floor(s/86400); s%=86400;
+  const h = Math.floor(s/3600); s%=3600;
+  const m = Math.floor(s/60); s%=60;
+  document.getElementById("cd-d").textContent = pad(d);
+  document.getElementById("cd-h").textContent = pad(h);
+  document.getElementById("cd-m").textContent = pad(m);
+  document.getElementById("cd-s").textContent = pad(s);
+}
+tick(); setInterval(tick, 1000);
+
+/* Stations */
+const notes = {
+  xanh:"Ga Xanh: phần 12:57 “Lúc cân nhắc” là của bạn.",
+  vang:"Ga Vàng: phần 13:12 “Lúc chuẩn bị” là của bạn.",
+  do:"Ga Đỏ: phần 13:47 “Lúc tới Nhật” là của bạn."
+};
+const stageName = {xanh:"Xanh · Đang phân vân",vang:"Vàng · Đang chuẩn bị",do:"Đỏ · Sắp lên đường"};
+let stage = null;
+document.querySelectorAll(".station").forEach(b=>{
+  b.addEventListener("click",()=>{
+    document.querySelectorAll(".station").forEach(x=>x.setAttribute("aria-pressed","false"));
+    b.setAttribute("aria-pressed","true");
+    stage = b.dataset.stage;
+    document.getElementById("pick-note").textContent = notes[stage];
+  });
+});
+
+/* Rumor votes */
+document.querySelectorAll(".rumor").forEach(card=>{
+  const btns = card.querySelectorAll(".vote button");
+  btns.forEach(b=>b.addEventListener("click",()=>{
+    btns.forEach(x=>x.setAttribute("aria-pressed","false"));
+    b.setAttribute("aria-pressed","true");
+    card.querySelector(".after").textContent = `Bạn chọn “${b.textContent}”. Đáp án: 13:32, 20/10, EP109.`;
+  }));
+});
+
+/* Form */
+const form = document.getElementById("reg");
+const rules = {
+  name: v => v.trim().split(/\s+/).length >= 2 || "Nhập đầy đủ họ và tên.",
+  mssv: v => /^[A-Za-z]{2}\d{6}$/.test(v.trim()) || "MSSV gồm 2 chữ và 6 số, ví dụ HE180000.",
+  email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) || "Email chưa đúng định dạng.",
+  phone: v => !v.trim() || /^(\+?84|0)\d{9}$/.test(v.replace(/[\s.-]/g,"")) || "Số điện thoại gồm 10 số, ví dụ 0912345678.",
+  major: v => v.trim().length >= 2 || "Nhập chuyên ngành của bạn.",
+  term: v => !!v || "Chọn kỳ học hiện tại."
+};
+function check(input){
+  const f = input.closest(".field"); if(!f) return true;
+  const rule = rules[input.name]; if(!rule) return true;
+  const r = rule(input.value);
+  const hint = f.querySelector(".hint");
+  if(!hint.dataset.base) hint.dataset.base = hint.textContent;
+  if(r === true){ f.classList.remove("err"); hint.textContent = hint.dataset.base; input.removeAttribute("aria-invalid"); return true; }
+  f.classList.add("err"); hint.textContent = r; input.setAttribute("aria-invalid","true"); return false;
+}
+form.querySelectorAll("input[name],select").forEach(el=>{
+  el.addEventListener("blur",()=>{ if(el.value) check(el); });
+  el.addEventListener("input",()=>{ if(el.closest(".field").classList.contains("err")) check(el); });
+});
+function prefillUrl(d){
+  if(!hasEntries) return FORM.url;
+  const p = new URLSearchParams({usp:"pp_url"});
+  for(const k in FORM.entries){ if(FORM.entries[k] && d[k]) p.append("entry."+FORM.entries[k], d[k]); }
+  return FORM.url + "?" + p.toString();
+}
+/* Gửi thẳng vào Google Form qua form ẩn + iframe ẩn. Resolve true khi Google trả về, false nếu bị chặn hoặc quá 9 giây. */
+function postToGoogle(d){
+  return new Promise(resolve=>{
+    try{
+      const name = "gf_" + Date.now();
+      const ifr = document.createElement("iframe");
+      ifr.name = name; ifr.hidden = true; ifr.title = "gửi đăng ký";
+      const f = document.createElement("form");
+      f.action = FORM.post; f.method = "POST"; f.target = name; f.hidden = true;
+      const add = (k,v)=>{ const i=document.createElement("input"); i.type="hidden"; i.name=k; i.value=v; f.appendChild(i); };
+      for(const k in FORM.entries){ if(FORM.entries[k] && d[k]) add("entry."+FORM.entries[k], d[k]); }
+      for(const k in FORM.fixed) add(k, FORM.fixed[k]);
+      add("pageHistory", Array.from({length:FORM.pages},(_,i)=>i).join(","));
+      let done=false, armed=false;
+      const finish = ok=>{ if(done) return; done=true; setTimeout(()=>{ifr.remove(); f.remove();},1500); resolve(ok); };
+      ifr.addEventListener("load",()=>{ if(armed) finish(true); });
+      document.body.append(ifr, f);
+      armed = true; f.submit();
+      setTimeout(()=>finish(false), 9000);
+    }catch(err){ resolve(false); }
+  });
+}
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function renderPass(d, sent){
+  const url = prefillUrl(d);
+  const next = sent
+    ? `<div class="steps"><span class="done">✓ Đã gửi BTC</span></div>
+       <p><b style="color:var(--ink)">Nhớ check-in từ 12:30</b> tại EP109, Thứ Ba 20/10. Chụp màn hình vé này để BTC xác nhận nhanh hơn.</p>`
+    : `<div class="steps"><span class="done">✓ Thông tin</span><span>Gửi Google Form</span></div>
+       <p>${hasEntries ? "Thông tin đã được điền sẵn. Mở Google Form và bấm Gửi để BTC ghi nhận chỗ của bạn." : "Bước cuối: mở Google Form chính thức của BTC, điền và bấm Gửi để BTC ghi nhận chỗ của bạn."} Nhớ check-in từ 12:30.</p>
+       <a class="btn red" href="${url}" target="_blank" rel="noopener">Hoàn tất trên Google Form <span aria-hidden="true">↗</span></a>`;
+  document.getElementById("form-slot").innerHTML = `
+    <div class="pass" tabindex="-1" id="pass">
+      <div class="pass-top">
+        <span class="ok">${sent ? "Đăng ký thành công" : "Đã giữ chỗ · Bước 1/2"}</span>
+        <h3>${esc(d.name.trim())}</h3>
+        <span class="mono" style="opacity:.7">${esc(d.mssv)} · ${esc(d.major.trim())}</span>
+      </div>
+      <dl class="pass-grid">
+        <div><dt>Ngày</dt><dd class="mono">20.10.2026</dd></div>
+        <div><dt>Check-in</dt><dd class="mono">từ 12:30</dd></div>
+        <div><dt>Phòng</dt><dd>EP109</dd></div>
+        <div><dt>Kỳ</dt><dd>${esc(d.term)}</dd></div>
+        <div style="grid-column:span 2"><dt>Chặng</dt><dd>${stage ? stageName[stage] : "Chọn ở mục “Bạn đang đứng ở ga nào?”"}</dd></div>
+      </dl>
+      <div class="pass-next">${next}</div>
+    </div>`;
+  const pass = document.getElementById("pass"); pass.focus(); pass.scrollIntoView({behavior:"smooth",block:"center"});
+}
+form.addEventListener("submit", async e=>{
+  e.preventDefault();
+  let ok = true, first = null;
+  form.querySelectorAll("input[name],select").forEach(el=>{ if(!check(el)){ ok=false; first = first || el; } });
+  const agree = document.getElementById("f-ok");
+  const msg = document.getElementById("form-msg");
+  if(!ok){ msg.textContent = "Còn vài mục cần sửa, xem các ô màu đỏ."; first.focus(); return; }
+  if(!agree.checked){ msg.textContent = "Tick xác nhận bạn sẽ có mặt check-in từ 12:30."; agree.focus(); return; }
+  const d = Object.fromEntries(new FormData(form));
+  d.mssv = d.mssv.trim().toUpperCase();
+  d.name = d.name.trim(); d.email = d.email.trim(); d.major = d.major.trim();
+  let sent = false;
+  if(hasEntries && FORM.direct){
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.firstChild.textContent = "Đang gửi ";
+    msg.textContent = "Đang gửi tới BTC…";
+    sent = await postToGoogle(d);
+  }
+  renderPass(d, sent);
+});
+</script>
